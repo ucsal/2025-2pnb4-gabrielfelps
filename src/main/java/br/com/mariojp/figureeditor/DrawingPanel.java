@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +15,8 @@ class DrawingPanel extends JPanel {
     private final List<Figure> figures = new ArrayList<>();
     private Point startDrag = null;
 
+    private FigureFactory.FigureType currentFigureType = FigureFactory.FigureType.ELLIPSE;
+
     DrawingPanel() {
         
         setBackground(Color.WHITE);
@@ -25,8 +26,7 @@ class DrawingPanel extends JPanel {
         var mouse = new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1 && startDrag == null) {
-                    int size = Math.max(Math.min(DEFAULT_SIZE, DEFAULT_SIZE), 10);
-                    Figure f = FigureFactory.createFigure(FigureFactory.FigureType.ELLIPSE, e.getPoint());
+                    Figure f = FigureFactory.createFigure(currentFigureType, e.getPoint());
                     figures.add(f);
                     repaint();
                 }
@@ -35,6 +35,10 @@ class DrawingPanel extends JPanel {
         addMouseListener(mouse);        
         addMouseMotionListener(mouse);
 
+    }
+
+    public void setCurrentFigureType(FigureFactory.FigureType type) {
+        this.currentFigureType = type;
     }
 
     void clear() {

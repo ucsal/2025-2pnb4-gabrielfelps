@@ -15,6 +15,30 @@ public class App {
 
             DrawingPanel panel = new DrawingPanel();
 
+            JToolBar toolBar = new JToolBar();
+            toolBar.setFloatable(false);
+            JButton ellipseButton = new JButton("Elipse");
+            JButton rectangleButton = new JButton("Retângulo");
+            toolBar.add(ellipseButton);
+            toolBar.add(rectangleButton);
+
+            ellipseButton.addActionListener(e -> {
+                panel.setCurrentFigureType(FigureFactory.FigureType.ELLIPSE);
+            });
+
+            rectangleButton.addActionListener(e -> {
+                panel.setCurrentFigureType(FigureFactory.FigureType.RECTANGLE);
+            });
+
+            frame.setLayout(new BorderLayout());
+
+            frame.add(toolBar, BorderLayout.NORTH); // Toolbar no topo
+            frame.add(panel, BorderLayout.CENTER); // Painel no centro
+
+            frame.setSize(900, 600);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+
             frame.setLayout(new BorderLayout());
             frame.add(panel, BorderLayout.CENTER);
 
